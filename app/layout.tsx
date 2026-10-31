@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { TopBar } from '@/components/ui/TopBar';
@@ -46,7 +47,9 @@ export default function RootLayout({
       >
         <TopBar />
         <div style={{ flex: 1, display: 'flex', minHeight: 'calc(100vh - 56px)' }}>
-          <Sidebar />
+          <Suspense fallback={<aside style={{ width: '210px', background: '#0B2545', flexShrink: 0 }} />}>
+            <Sidebar />
+          </Suspense>
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'var(--bg)', minWidth: 0 }}>
             <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
               {children}

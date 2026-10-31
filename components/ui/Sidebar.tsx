@@ -1,9 +1,10 @@
 'use client';
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useUiStore } from '@/store/uiStore';
 
-export function Sidebar() {
+function SidebarContent() {
   const pathname = usePathname();
   const { language } = useUiStore();
 
@@ -166,5 +167,24 @@ export function Sidebar() {
         <div style={{ fontSize: '9px', marginTop: '4px', color: '#B45309' }}>Simulated Deployment</div>
       </div>
     </aside>
+  );
+}
+
+export function Sidebar() {
+  return (
+    <Suspense
+      fallback={
+        <aside
+          style={{
+            width: '210px',
+            flexShrink: 0,
+            background: '#0B2545',
+            borderRight: '1px solid #13335A',
+          }}
+        />
+      }
+    >
+      <SidebarContent />
+    </Suspense>
   );
 }
