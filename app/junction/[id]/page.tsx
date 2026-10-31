@@ -1,5 +1,6 @@
 'use client';
 import { Suspense, use } from 'react';
+import dynamic from 'next/dynamic';
 import { JUNCTIONS } from '@/lib/data/corridor';
 import { getOperatorByJunction } from '@/lib/data/operators';
 import { useJunctionStore } from '@/store/junctionStore';
@@ -13,6 +14,35 @@ import { DecisionSupport } from '@/components/junction/DecisionSupport';
 import { Badge } from '@/components/ui/Badge';
 import { formatSeconds } from '@/hooks/useCountdown';
 import Link from 'next/link';
+
+const TacticalJunctionMap = dynamic(
+  () => import('@/components/junction/TacticalJunctionMap').then((m) => m.TacticalJunctionMap),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        style={{
+          height: '320px',
+          borderRadius: '12px',
+          background: '#FFFFFF',
+          border: '1px solid var(--border)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '8px',
+          color: '#5B6B80',
+          fontSize: '13px',
+          fontWeight: 600,
+          boxShadow: 'var(--shadow-card)',
+        }}
+      >
+        <span style={{ fontSize: '24px' }}>🗺️</span>
+        <span>Initializing Tactical Intersection Map & Signal Phasing...</span>
+      </div>
+    ),
+  }
+);
 
 interface JunctionPageProps {
   params: Promise<{ id: string }>;
@@ -51,12 +81,12 @@ function JunctionContent({ params }: JunctionPageProps) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        padding: '14px 20px 28px',
+        padding: '16px 20px 32px',
         boxSizing: 'border-box',
         minHeight: '100%',
       }}
     >
-      <div style={{ width: '100%', maxWidth: '940px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div style={{ width: '100%', maxWidth: '980px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
         {/* Navigation Breadcrumb & Live sync chip */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -81,7 +111,7 @@ function JunctionContent({ params }: JunctionPageProps) {
             </Link>
             <span style={{ fontSize: '12px', color: '#64748B' }}>/</span>
             <span style={{ fontSize: '12px', fontWeight: 700, color: '#0B2545' }}>
-              Field Officer Signal Terminal
+              Field Officer Signal & Tactical Map Terminal
             </span>
           </div>
 
@@ -99,7 +129,7 @@ function JunctionContent({ params }: JunctionPageProps) {
           >
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#16A34A', display: 'inline-block' }} />
             <span style={{ fontSize: '11px', color: '#0F766E', fontFamily: 'var(--font-mono, monospace)', fontWeight: 700 }}>
-              BROADCAST SYNC ACTIVE
+              TACTICAL TELEMETRY ACTIVE
             </span>
           </div>
         </div>
@@ -136,7 +166,7 @@ function JunctionContent({ params }: JunctionPageProps) {
                 href={`/junction/${j.id}`}
                 style={{
                   textDecoration: 'none',
-                  padding: '8px 12px',
+                  padding: '7px 12px',
                   borderRadius: '6px',
                   background: isSelected ? '#0B2545' : '#F8FAFC',
                   border: isSelected ? '1px solid #0B2545' : '1px solid #E2E8F0',
@@ -219,24 +249,27 @@ function JunctionContent({ params }: JunctionPageProps) {
           </div>
         )}
 
-        {/* Two-Column Responsive Layout for Desktop & Tablet */}
+        {/* Tactical Intersection Map & Roadblock / Green Wave Directives */}
+        <TacticalJunctionMap junction={junction} />
+
+        {/* Two-Column Responsive Controls & Ledger */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-            gap: '16px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+            gap: '14px',
             alignItems: 'start',
           }}
         >
           {/* Left Column: ETA Ring, Task Details & Officer Identity */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {/* Big ETA Countdown Ring Card */}
             <div
               style={{
                 background: '#FFFFFF',
                 border: '1px solid var(--border)',
                 borderRadius: '12px',
-                padding: '20px 16px',
+                padding: '16px',
                 boxShadow: 'var(--shadow-card)',
               }}
             >
@@ -252,7 +285,7 @@ function JunctionContent({ params }: JunctionPageProps) {
                 background: '#FFFFFF',
                 border: '1px solid var(--border)',
                 borderRadius: '10px',
-                padding: '14px 16px',
+                padding: '12px 14px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -261,7 +294,7 @@ function JunctionContent({ params }: JunctionPageProps) {
             >
               <div>
                 <div style={{ fontSize: '11px', color: '#5B6B80', fontWeight: 600 }}>Assigned Traffic Officer</div>
-                <div style={{ fontSize: '14px', fontWeight: 800, color: '#0B2545', marginTop: '2px' }}>
+                <div style={{ fontSize: '13px', fontWeight: 800, color: '#0B2545', marginTop: '2px' }}>
                   {operator?.name ?? 'Ravi Kumar'} ({operator?.id ?? 'OP-001'})
                 </div>
                 <div style={{ fontSize: '11px', color: '#5B6B80', marginTop: '2px' }}>
@@ -273,7 +306,7 @@ function JunctionContent({ params }: JunctionPageProps) {
           </div>
 
           {/* Right Column: Actions, Decision Support & Activity Ledger */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {/* Decision Support Card (if present) */}
             {task?.decisionSupport && (
               <DecisionSupport
@@ -312,7 +345,7 @@ function JunctionContent({ params }: JunctionPageProps) {
             >
               <div
                 style={{
-                  padding: '12px 16px',
+                  padding: '10px 14px',
                   borderBottom: '1px solid var(--border)',
                   fontSize: '11px',
                   fontWeight: 700,
@@ -337,7 +370,7 @@ function JunctionContent({ params }: JunctionPageProps) {
                   {junctionEvents.length} Recent Records
                 </span>
               </div>
-              <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div style={{ padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {junctionEvents.length === 0 ? (
                   <div style={{ fontSize: '11px', color: '#94A3B8', fontStyle: 'italic', padding: '6px 0' }}>
                     No events recorded for this junction yet.
