@@ -12,11 +12,11 @@ interface EtaRingProps {
 export function EtaRing({ seconds, maxSeconds = 120, isReady, isCleared }: EtaRingProps) {
   if (isCleared) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px 0' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '6px 0' }}>
         <div
           style={{
-            width: '120px',
-            height: '120px',
+            width: '96px',
+            height: '96px',
             borderRadius: '50%',
             background: '#F1F5F9',
             border: '2.5px solid #15803D',
@@ -27,12 +27,12 @@ export function EtaRing({ seconds, maxSeconds = 120, isReady, isCleared }: EtaRi
             boxShadow: 'var(--shadow-card)',
           }}
         >
-          <span style={{ fontSize: '32px', color: '#15803D' }}>✓</span>
-          <span style={{ fontSize: '12px', fontWeight: 800, color: '#15803D', marginTop: '2px' }}>
+          <span style={{ fontSize: '26px', color: '#15803D' }}>✓</span>
+          <span style={{ fontSize: '11px', fontWeight: 800, color: '#15803D', marginTop: '2px' }}>
             CLEARED
           </span>
         </div>
-        <div style={{ fontSize: '12px', color: '#5B6B80', fontWeight: 600, marginTop: '8px' }}>
+        <div style={{ fontSize: '11px', color: '#5B6B80', fontWeight: 600, marginTop: '6px' }}>
           Ambulance passed intersection
         </div>
       </div>
@@ -41,27 +41,27 @@ export function EtaRing({ seconds, maxSeconds = 120, isReady, isCleared }: EtaRi
 
   if (isReady) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px 0' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '6px 0' }}>
         <div
           style={{
-            width: '120px',
-            height: '120px',
+            width: '96px',
+            height: '96px',
             borderRadius: '50%',
             background: '#DCFCE7',
-            border: '3px solid #15803D',
+            border: '2.5px solid #15803D',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 4px 12px rgba(21, 128, 61, 0.2)',
+            boxShadow: '0 3px 10px rgba(21, 128, 61, 0.18)',
           }}
         >
-          <span style={{ fontSize: '30px' }}>🟢</span>
-          <span style={{ fontSize: '12px', fontWeight: 800, color: '#15803D', marginTop: '4px' }}>
+          <span style={{ fontSize: '24px' }}>🟢</span>
+          <span style={{ fontSize: '11px', fontWeight: 800, color: '#15803D', marginTop: '2px' }}>
             SIGNAL READY
           </span>
         </div>
-        <div style={{ fontSize: '12px', color: '#15803D', fontWeight: 700, marginTop: '8px' }}>
+        <div style={{ fontSize: '11px', color: '#15803D', fontWeight: 700, marginTop: '6px' }}>
           Corridor green locked · ETA {formatSeconds(seconds)}
         </div>
       </div>
@@ -69,9 +69,9 @@ export function EtaRing({ seconds, maxSeconds = 120, isReady, isCleared }: EtaRi
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px 0' }}>
-      <CountdownRing seconds={Math.round(seconds)} maxSeconds={maxSeconds} size={130} strokeWidth={8} />
-      <div style={{ fontSize: '12px', color: '#5B6B80', fontWeight: 600, marginTop: '10px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '6px 0' }}>
+      <CountdownRing seconds={Math.round(seconds)} maxSeconds={maxSeconds} size={96} strokeWidth={7} />
+      <div style={{ fontSize: '11px', color: '#5B6B80', fontWeight: 600, marginTop: '6px' }}>
         Vehicle ETA to Stop Line
       </div>
     </div>

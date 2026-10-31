@@ -39,19 +39,30 @@ export default function RootLayout({
           color: 'var(--text)',
           margin: 0,
           padding: 0,
-          minHeight: '100vh',
+          height: '100vh',
           display: 'flex',
           flexDirection: 'column',
-          overflowX: 'hidden',
+          overflow: 'hidden',
         }}
       >
         <TopBar />
-        <div style={{ flex: 1, display: 'flex', minHeight: 'calc(100vh - 56px)' }}>
+        <div style={{ flex: 1, display: 'flex', height: 'calc(100vh - 56px)', overflow: 'hidden' }}>
           <Suspense fallback={<aside style={{ width: '210px', background: '#0B2545', flexShrink: 0 }} />}>
             <Sidebar />
           </Suspense>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'var(--bg)', minWidth: 0 }}>
-            <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <div
+            id="main-scroll-container"
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              background: 'var(--bg)',
+              minWidth: 0,
+              height: '100%',
+              overflowY: 'auto',
+            }}
+          >
+            <main style={{ flex: '1 0 auto', display: 'flex', flexDirection: 'column' }}>
               {children}
             </main>
 

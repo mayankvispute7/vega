@@ -134,8 +134,12 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#__next, main {
+#__next {
   height: 100%;
+}
+
+main {
+  min-height: 0;
 }
 
 /* ─── Scrollbars ───────────────────────────────────────────────────────────── */

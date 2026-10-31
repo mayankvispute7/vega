@@ -82,7 +82,7 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
             background: status === 'Received' || status === 'Preparing' ? '#E0E9FF' : '#FFFFFF',
             border: `1.5px solid ${status === 'Received' ? '#1D4ED8' : '#BFDBFE'}`,
             borderRadius: '10px',
-            padding: '14px 10px',
+            padding: '11px 8px',
             color: '#1D4ED8',
             fontWeight: 800,
             fontSize: '13px',
@@ -91,12 +91,12 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '4px',
+            gap: '3px',
             boxShadow: 'var(--shadow-card)',
             transition: 'all 150ms',
           }}
         >
-          <span style={{ fontSize: '18px' }}>📥</span>
+          <span style={{ fontSize: '17px' }}>📥</span>
           <span>1. Acknowledge</span>
         </button>
 
@@ -108,7 +108,7 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
             background: status === 'Preparing' ? '#FEF3C7' : '#FFFFFF',
             border: `1.5px solid ${status === 'Preparing' ? '#B45309' : '#FDE68A'}`,
             borderRadius: '10px',
-            padding: '14px 10px',
+            padding: '11px 8px',
             color: '#B45309',
             fontWeight: 800,
             fontSize: '13px',
@@ -117,12 +117,12 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '4px',
+            gap: '3px',
             boxShadow: 'var(--shadow-card)',
             transition: 'all 150ms',
           }}
         >
-          <span style={{ fontSize: '18px' }}>⏳</span>
+          <span style={{ fontSize: '17px' }}>⏳</span>
           <span>2. Preparing</span>
         </button>
       </div>
@@ -135,10 +135,10 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
           background: status === 'Ready' ? '#DCFCE7' : '#15803D',
           border: status === 'Ready' ? '2px solid #86EFAC' : 'none',
           borderRadius: '10px',
-          padding: '16px',
+          padding: '13px',
           color: status === 'Ready' ? '#15803D' : '#FFFFFF',
           fontWeight: 800,
-          fontSize: '15px',
+          fontSize: '14px',
           cursor: isTerminal ? 'not-allowed' : 'pointer',
           opacity: isTerminal && status !== 'Ready' ? 0.4 : 1,
           display: 'flex',
@@ -149,7 +149,7 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
           transition: 'all 150ms',
         }}
       >
-        <span style={{ fontSize: '18px' }}>🟢</span>
+        <span style={{ fontSize: '16px' }}>🟢</span>
         <span>{status === 'Ready' ? 'SIGNAL READY CONFIRMED' : '3. CONFIRM SIGNAL READY'}</span>
       </button>
 
