@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import { RING_AMBER_THRESHOLD_S, RING_RED_THRESHOLD_S } from '@/lib/constants';
 import { useCountdown } from '@/hooks/useCountdown';
 
@@ -27,12 +27,12 @@ export function CountdownRing({
 
   const color =
     seconds <= RING_RED_THRESHOLD_S
-      ? 'var(--danger)'
+      ? '#B91C1C'
       : seconds <= RING_AMBER_THRESHOLD_S
-      ? 'var(--amber)'
-      : 'var(--teal)';
+      ? '#B45309'
+      : '#0F766E';
 
-  const fontSize = size < 60 ? '11px' : size < 100 ? '14px' : '22px';
+  const fontSize = size < 60 ? '11px' : size < 100 ? '14px' : '20px';
 
   return (
     <div
@@ -40,13 +40,13 @@ export function CountdownRing({
       style={{ position: 'relative', width: size, height: size, flexShrink: 0 }}
     >
       <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
-        {/* Track */}
+        {/* Track (Light theme grey) */}
         <circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="rgba(255,255,255,0.06)"
+          stroke="#D6DFEA"
           strokeWidth={strokeWidth}
         />
         {/* Progress */}
@@ -73,7 +73,7 @@ export function CountdownRing({
             justifyContent: 'center',
             fontFamily: 'var(--font-mono, JetBrains Mono, monospace)',
             fontSize,
-            fontWeight: 600,
+            fontWeight: 700,
             color,
           }}
         >

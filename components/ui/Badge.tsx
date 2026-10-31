@@ -1,15 +1,6 @@
-﻿import type { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 type BadgeVariant = 'teal' | 'amber' | 'danger' | 'info' | 'muted' | 'simulated';
-
-const VARIANT_STYLES: Record<BadgeVariant, string> = {
-  teal:      'color: var(--teal);   background: rgba(45,212,191,0.12);  border: 1px solid rgba(45,212,191,0.25)',
-  amber:     'color: var(--amber);  background: rgba(255,190,92,0.12);  border: 1px solid rgba(255,190,92,0.25)',
-  danger:    'color: var(--danger); background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.25)',
-  info:      'color: var(--info);   background: rgba(96,165,250,0.12);  border: 1px solid rgba(96,165,250,0.25)',
-  muted:     'color: var(--text-muted); background: rgba(143,163,191,0.08); border: 1px solid var(--border)',
-  simulated: 'color: var(--amber);  background: rgba(255,190,92,0.10);  border: 1px solid rgba(255,190,92,0.25)',
-};
 
 interface BadgeProps {
   children: ReactNode;
@@ -19,6 +10,39 @@ interface BadgeProps {
 }
 
 export function Badge({ children, variant = 'muted', mono = false, className = '' }: BadgeProps) {
+  const styles = {
+    teal: {
+      color: '#0F766E',
+      background: '#CCFBF1',
+      border: '1px solid #99F6E4',
+    },
+    amber: {
+      color: '#B45309',
+      background: '#FEF3C7',
+      border: '1px solid #FDE68A',
+    },
+    simulated: {
+      color: '#92400E',
+      background: '#FEF3C7',
+      border: '1px solid #FCD34D',
+    },
+    danger: {
+      color: '#B91C1C',
+      background: '#FEE2E2',
+      border: '1px solid #FECACA',
+    },
+    info: {
+      color: '#0369A1',
+      background: '#E0F2FE',
+      border: '1px solid #BAE6FD',
+    },
+    muted: {
+      color: '#5B6B80',
+      background: '#EEF3F9',
+      border: '1px solid #D6DFEA',
+    },
+  }[variant];
+
   return (
     <span
       className={className}
@@ -29,26 +53,13 @@ export function Badge({ children, variant = 'muted', mono = false, className = '
         padding: '2px 8px',
         borderRadius: '6px',
         fontSize: '11px',
-        fontWeight: 600,
-        letterSpacing: '0.07em',
+        fontWeight: 700,
+        letterSpacing: '0.05em',
         textTransform: 'uppercase',
         fontFamily: mono ? 'var(--font-mono, monospace)' : 'inherit',
-        // Inline style string parsing workaround — use direct properties:
-        color: variant === 'teal' ? 'var(--teal)' :
-               variant === 'amber' || variant === 'simulated' ? 'var(--amber)' :
-               variant === 'danger' ? 'var(--danger)' :
-               variant === 'info' ? 'var(--info)' :
-               'var(--text-muted)',
-        background: variant === 'teal' ? 'rgba(45,212,191,0.12)' :
-                    variant === 'amber' || variant === 'simulated' ? 'rgba(255,190,92,0.10)' :
-                    variant === 'danger' ? 'rgba(248,113,113,0.12)' :
-                    variant === 'info' ? 'rgba(96,165,250,0.12)' :
-                    'rgba(143,163,191,0.08)',
-        border: variant === 'teal' ? '1px solid rgba(45,212,191,0.25)' :
-                variant === 'amber' || variant === 'simulated' ? '1px solid rgba(255,190,92,0.25)' :
-                variant === 'danger' ? '1px solid rgba(248,113,113,0.25)' :
-                variant === 'info' ? '1px solid rgba(96,165,250,0.25)' :
-                '1px solid var(--border)',
+        color: styles.color,
+        background: styles.background,
+        border: styles.border,
       }}
     >
       {children}

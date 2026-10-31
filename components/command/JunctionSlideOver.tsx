@@ -32,11 +32,10 @@ export function JunctionSlideOver() {
             top: 0,
             right: 0,
             bottom: 0,
-            width: '340px',
-            background: 'rgba(18, 32, 58, 0.96)',
-            backdropFilter: 'blur(16px)',
-            borderLeft: '1px solid var(--border)',
-            boxShadow: '-8px 0 32px rgba(0, 0, 0, 0.5)',
+            width: '350px',
+            background: '#FFFFFF',
+            borderLeft: '1px solid #D6DFEA',
+            boxShadow: '-4px 0 24px rgba(11, 37, 69, 0.12)',
             display: 'flex',
             flexDirection: 'column',
             zIndex: 30,
@@ -47,49 +46,51 @@ export function JunctionSlideOver() {
           <div
             style={{
               padding: '16px',
-              borderBottom: '1px solid var(--border)',
+              borderBottom: '1px solid #D6DFEA',
               display: 'flex',
               alignItems: 'flex-start',
               justifyContent: 'space-between',
+              background: '#EEF3F9',
             }}
           >
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                 <span
                   style={{
-                    background: 'var(--teal)',
-                    color: '#0A1222',
+                    background: '#1D4ED8',
+                    color: '#FFFFFF',
                     fontSize: '11px',
                     fontWeight: 800,
-                    padding: '2px 6px',
+                    padding: '2px 7px',
                     borderRadius: '4px',
                     fontFamily: 'var(--font-mono, monospace)',
                   }}
                 >
                   {junction.id}
                 </span>
-                <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-                  {junction.distanceFromOriginM}m from start
+                <span style={{ fontSize: '11px', color: '#5B6B80', fontWeight: 600 }}>
+                  {junction.distanceFromOriginM}m along corridor
                 </span>
               </div>
-              <h2 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+              <h2 style={{ fontSize: '16px', fontWeight: 800, color: '#0B2545', margin: 0 }}>
                 {junction.name}
               </h2>
             </div>
             <button
               onClick={() => selectJunction(null)}
               style={{
-                background: 'rgba(255, 255, 255, 0.06)',
-                border: 'none',
+                background: '#FFFFFF',
+                border: '1px solid #D6DFEA',
                 borderRadius: '6px',
-                color: 'var(--text-muted)',
+                color: '#5B6B80',
                 cursor: 'pointer',
                 width: '28px',
                 height: '28px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '14px',
+                fontSize: '13px',
+                fontWeight: 700,
               }}
               aria-label="Close slide-over"
             >
@@ -98,21 +99,22 @@ export function JunctionSlideOver() {
           </div>
 
           {/* Body Content */}
-          <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px', flex: 1 }}>
+          <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
             {/* Status & Countdown banner */}
             <div
               style={{
-                background: 'var(--bg-raised)',
-                border: '1px solid var(--border)',
+                background: '#F8FAFC',
+                border: '1px solid #D6DFEA',
                 borderRadius: '10px',
                 padding: '14px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
+                boxShadow: 'var(--shadow-card)',
               }}
             >
               <div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px' }}>
+                <div style={{ fontSize: '11px', color: '#5B6B80', fontWeight: 600, marginBottom: '4px' }}>
                   Current Task Status
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -127,7 +129,7 @@ export function JunctionSlideOver() {
               {eta > 0 && (
                 <div style={{ textAlign: 'center' }}>
                   <CountdownRing seconds={Math.round(eta)} maxSeconds={120} size={54} strokeWidth={4} />
-                  <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '2px' }}>ETA</div>
+                  <div style={{ fontSize: '10px', color: '#5B6B80', fontWeight: 600, marginTop: '2px' }}>ETA</div>
                 </div>
               )}
             </div>
@@ -135,31 +137,32 @@ export function JunctionSlideOver() {
             {/* Operator Card */}
             <div
               style={{
-                background: 'var(--bg-raised)',
-                border: '1px solid var(--border)',
+                background: '#FFFFFF',
+                border: '1px solid #D6DFEA',
                 borderRadius: '10px',
                 padding: '14px',
+                boxShadow: 'var(--shadow-card)',
               }}
             >
               <div
                 style={{
                   fontSize: '11px',
-                  fontWeight: 600,
-                  color: 'var(--text-muted)',
+                  fontWeight: 700,
+                  color: '#0B2545',
                   textTransform: 'uppercase',
-                  letterSpacing: '0.06em',
+                  letterSpacing: '0.05em',
                   marginBottom: '8px',
                 }}
               >
-                Traffic Controller
+                Assigned Traffic Officer
               </div>
-              <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)', marginBottom: '2px' }}>
+              <div style={{ fontSize: '14px', fontWeight: 700, color: '#0F1B2D', marginBottom: '2px' }}>
                 {operator?.name ?? 'Assigned Officer'}
               </div>
-              <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '8px' }}>
+              <div style={{ fontSize: '12px', color: '#5B6B80', marginBottom: '8px' }}>
                 {operator?.phone} · Role: {operator?.role ?? 'operator'}
               </div>
-              <div style={{ fontSize: '11px', color: 'var(--info)', background: 'rgba(96,165,250,0.08)', padding: '6px 8px', borderRadius: '6px' }}>
+              <div style={{ fontSize: '11px', color: '#0369A1', background: '#E0F2FE', padding: '6px 8px', borderRadius: '6px', fontWeight: 500 }}>
                 Behavior Profile: {operator?.behaviour ?? 'Standard operator'}
               </div>
             </div>
@@ -174,27 +177,29 @@ export function JunctionSlideOver() {
             >
               <div
                 style={{
-                  background: 'var(--bg-raised)',
-                  border: '1px solid var(--border)',
+                  background: '#FFFFFF',
+                  border: '1px solid #D6DFEA',
                   borderRadius: '8px',
                   padding: '10px',
+                  boxShadow: 'var(--shadow-card)',
                 }}
               >
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Required Lead Time</div>
-                <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--teal)', fontFamily: 'var(--font-mono, monospace)', marginTop: '2px' }}>
+                <div style={{ fontSize: '11px', color: '#5B6B80', fontWeight: 600 }}>Required Lead Time</div>
+                <div style={{ fontSize: '16px', fontWeight: 800, color: '#0F766E', fontFamily: 'var(--font-mono, monospace)', marginTop: '2px' }}>
                   {junction.leadTime}s
                 </div>
               </div>
               <div
                 style={{
-                  background: 'var(--bg-raised)',
-                  border: '1px solid var(--border)',
+                  background: '#FFFFFF',
+                  border: '1px solid #D6DFEA',
                   borderRadius: '8px',
                   padding: '10px',
+                  boxShadow: 'var(--shadow-card)',
                 }}
               >
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Current Queue</div>
-                <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--amber)', fontFamily: 'var(--font-mono, monospace)', marginTop: '2px' }}>
+                <div style={{ fontSize: '11px', color: '#5B6B80', fontWeight: 600 }}>Current Queue</div>
+                <div style={{ fontSize: '16px', fontWeight: 800, color: '#B45309', fontFamily: 'var(--font-mono, monospace)', marginTop: '2px' }}>
                   ~{junction.queueLength} vehicles
                 </div>
               </div>
@@ -203,16 +208,16 @@ export function JunctionSlideOver() {
             {/* Pedestrian phase info */}
             <div
               style={{
-                background: 'rgba(10, 18, 34, 0.6)',
-                border: '1px solid var(--border)',
+                background: '#F8FAFC',
+                border: '1px solid #D6DFEA',
                 borderRadius: '8px',
                 padding: '10px 12px',
                 fontSize: '12px',
-                color: 'var(--text-muted)',
+                color: '#5B6B80',
               }}
             >
               Pedestrian Crossing Phase:{' '}
-              <strong style={{ color: junction.hasPedestrianPhase ? 'var(--amber)' : 'var(--text)' }}>
+              <strong style={{ color: junction.hasPedestrianPhase ? '#B45309' : '#0F1B2D' }}>
                 {junction.hasPedestrianPhase ? 'Active (Clearance needed)' : 'None'}
               </strong>
             </div>
@@ -221,19 +226,19 @@ export function JunctionSlideOver() {
             {task?.decisionSupport && (
               <div
                 style={{
-                  background: 'rgba(255, 190, 92, 0.08)',
-                  border: '1px solid rgba(255, 190, 92, 0.3)',
+                  background: '#FEF3C7',
+                  border: '1px solid #FCD34D',
                   borderRadius: '8px',
                   padding: '12px',
                 }}
               >
-                <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--amber)', marginBottom: '4px' }}>
+                <div style={{ fontSize: '11px', fontWeight: 800, color: '#92400E', marginBottom: '4px' }}>
                   💡 DECISION SUPPORT RECOMMENDATION
                 </div>
-                <div style={{ fontSize: '12px', color: 'var(--text)', marginBottom: '6px' }}>
+                <div style={{ fontSize: '12px', fontWeight: 700, color: '#78350F', marginBottom: '4px' }}>
                   {task.decisionSupport.action}
                 </div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                <div style={{ fontSize: '11px', color: '#92400E' }}>
                   {task.decisionSupport.rationale}
                 </div>
               </div>
@@ -241,22 +246,22 @@ export function JunctionSlideOver() {
           </div>
 
           {/* Footer Action */}
-          <div style={{ padding: '16px', borderTop: '1px solid var(--border)' }}>
+          <div style={{ padding: '16px', borderTop: '1px solid #D6DFEA', background: '#F8FAFC' }}>
             <Link
               href={`/junction/${junction.id}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{
                 display: 'block',
-                background: 'var(--teal)',
-                color: '#0A1222',
+                background: '#1D4ED8',
+                color: '#FFFFFF',
                 borderRadius: '8px',
                 padding: '10px 16px',
                 fontSize: '13px',
                 fontWeight: 700,
                 textAlign: 'center',
                 textDecoration: 'none',
-                boxShadow: '0 0 16px rgba(45, 212, 191, 0.35)',
+                boxShadow: '0 2px 6px rgba(29, 78, 216, 0.25)',
               }}
             >
               Open Live Operator Console ↗

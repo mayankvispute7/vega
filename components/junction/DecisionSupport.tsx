@@ -65,17 +65,17 @@ export function DecisionSupport({ junctionId, recommendation, operatorName }: De
   return (
     <div
       style={{
-        background: 'rgba(255, 190, 92, 0.08)',
-        border: '1px solid rgba(255, 190, 92, 0.3)',
+        background: '#FEF3C7',
+        border: '1.5px solid #FCD34D',
         borderRadius: '12px',
         padding: '16px',
-        boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
+        boxShadow: 'var(--shadow-card)',
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span style={{ fontSize: '14px' }}>💡</span>
-          <span style={{ fontSize: '11px', fontWeight: 800, color: 'var(--amber)', letterSpacing: '0.06em' }}>
+          <span style={{ fontSize: '15px' }}>💡</span>
+          <span style={{ fontSize: '11px', fontWeight: 800, color: '#92400E', letterSpacing: '0.06em' }}>
             DECISION SUPPORT RECOMMENDATION
           </span>
         </div>
@@ -94,27 +94,28 @@ export function DecisionSupport({ junctionId, recommendation, operatorName }: De
         )}
       </div>
 
-      <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text)', marginBottom: '6px', lineHeight: 1.4 }}>
+      <div style={{ fontSize: '13px', fontWeight: 800, color: '#78350F', marginBottom: '6px', lineHeight: 1.4 }}>
         {recommendation.action}
       </div>
 
-      <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '14px', lineHeight: 1.4 }}>
+      <div style={{ fontSize: '12px', color: '#92400E', marginBottom: '14px', lineHeight: 1.4 }}>
         {recommendation.rationale}
       </div>
 
       {recommendation.modifiedNote && (
         <div
           style={{
-            background: 'rgba(10, 18, 34, 0.6)',
-            border: '1px solid var(--border)',
+            background: '#FFFFFF',
+            border: '1px solid #FCD34D',
             borderRadius: '6px',
             padding: '6px 10px',
             fontSize: '11px',
-            color: 'var(--amber)',
+            color: '#B45309',
             marginBottom: '10px',
+            fontWeight: 600,
           }}
         >
-          Operator Note: {recommendation.modifiedNote}
+          Officer Note: {recommendation.modifiedNote}
         </div>
       )}
 
@@ -126,11 +127,11 @@ export function DecisionSupport({ junctionId, recommendation, operatorName }: De
               onClick={() => handleOutcome('Accepted')}
               style={{
                 flex: 1,
-                background: 'rgba(45, 212, 191, 0.2)',
-                border: '1px solid var(--teal)',
+                background: '#DCFCE7',
+                border: '1.5px solid #86EFAC',
                 borderRadius: '6px',
                 padding: '8px',
-                color: 'var(--teal)',
+                color: '#15803D',
                 fontSize: '12px',
                 fontWeight: 700,
                 cursor: 'pointer',
@@ -142,13 +143,13 @@ export function DecisionSupport({ junctionId, recommendation, operatorName }: De
               onClick={() => setIsEditing(true)}
               style={{
                 flex: 1,
-                background: 'rgba(255, 190, 92, 0.15)',
-                border: '1px solid var(--amber)',
+                background: '#FFFFFF',
+                border: '1.5px solid #FCD34D',
                 borderRadius: '6px',
                 padding: '8px',
-                color: 'var(--amber)',
+                color: '#B45309',
                 fontSize: '12px',
-                fontWeight: 600,
+                fontWeight: 700,
                 cursor: 'pointer',
               }}
             >
@@ -157,12 +158,13 @@ export function DecisionSupport({ junctionId, recommendation, operatorName }: De
             <button
               onClick={() => handleOutcome('Rejected')}
               style={{
-                background: 'none',
-                border: '1px solid var(--border)',
+                background: '#FFFFFF',
+                border: '1px solid #D6DFEA',
                 borderRadius: '6px',
                 padding: '8px 12px',
-                color: 'var(--text-muted)',
+                color: '#5B6B80',
                 fontSize: '12px',
+                fontWeight: 600,
                 cursor: 'pointer',
               }}
             >
@@ -177,11 +179,11 @@ export function DecisionSupport({ junctionId, recommendation, operatorName }: De
               value={modifiedNote}
               onChange={(e) => setModifiedNote(e.target.value)}
               style={{
-                background: 'var(--bg-base)',
-                border: '1px solid var(--border)',
+                background: '#FFFFFF',
+                border: '1px solid #D6DFEA',
                 borderRadius: '6px',
                 padding: '8px 10px',
-                color: 'var(--text)',
+                color: '#0F1B2D',
                 fontSize: '12px',
                 outline: 'none',
               }}
@@ -191,26 +193,26 @@ export function DecisionSupport({ junctionId, recommendation, operatorName }: De
                 onClick={() => handleOutcome('Modified', modifiedNote)}
                 style={{
                   flex: 1,
-                  background: 'var(--amber)',
+                  background: '#B45309',
                   border: 'none',
                   borderRadius: '6px',
                   padding: '8px',
-                  color: '#0A1222',
+                  color: '#FFFFFF',
                   fontSize: '12px',
                   fontWeight: 700,
                   cursor: 'pointer',
                 }}
               >
-                Confirm Modification
+                Save Adjustment
               </button>
               <button
                 onClick={() => setIsEditing(false)}
                 style={{
-                  background: 'none',
-                  border: '1px solid var(--border)',
+                  background: '#FFFFFF',
+                  border: '1px solid #D6DFEA',
                   borderRadius: '6px',
                   padding: '8px 12px',
-                  color: 'var(--text-muted)',
+                  color: '#5B6B80',
                   fontSize: '12px',
                   cursor: 'pointer',
                 }}
@@ -220,11 +222,7 @@ export function DecisionSupport({ junctionId, recommendation, operatorName }: De
             </div>
           </div>
         )
-      ) : (
-        <div style={{ fontSize: '11px', color: 'var(--text-dim)', fontStyle: 'italic' }}>
-          Response recorded and submitted to corridor audit ledger.
-        </div>
-      )}
+      ) : null}
     </div>
   );
 }

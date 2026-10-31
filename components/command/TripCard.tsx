@@ -18,10 +18,10 @@ export function TripCard() {
         <span
           style={{
             fontSize: '11px',
-            fontWeight: 600,
-            color: 'var(--text-muted)',
+            fontWeight: 700,
+            color: 'var(--navy)',
             textTransform: 'uppercase',
-            letterSpacing: '0.08em',
+            letterSpacing: '0.06em',
           }}
         >
           Active Corridor Trip
@@ -35,8 +35,8 @@ export function TripCard() {
         style={{
           fontFamily: 'var(--font-mono, monospace)',
           fontSize: '16px',
-          fontWeight: 700,
-          color: 'var(--text)',
+          fontWeight: 800,
+          color: '#0B2545',
           marginBottom: '4px',
           display: 'flex',
           alignItems: 'center',
@@ -50,7 +50,7 @@ export function TripCard() {
       <div
         style={{
           fontSize: '12px',
-          color: 'var(--text-muted)',
+          color: 'var(--muted)',
           marginBottom: '12px',
           lineHeight: '1.4',
         }}

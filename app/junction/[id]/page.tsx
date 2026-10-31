@@ -45,36 +45,36 @@ function JunctionContent({ params }: JunctionPageProps) {
   return (
     <div
       style={{
-        minHeight: 'calc(100vh - 52px)',
-        background: 'var(--bg-base)',
+        minHeight: 'calc(100vh - 92px)',
+        background: '#F4F7FB',
         color: 'var(--text)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        padding: '16px',
+        padding: '20px 16px',
         boxSizing: 'border-box',
       }}
     >
-      <div style={{ width: '100%', maxWidth: '440px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ width: '100%', maxWidth: '460px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {/* Navigation Breadcrumb & Live sync chip */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Link
             href="/command"
             style={{
               fontSize: '12px',
-              color: 'var(--teal)',
+              color: '#1D4ED8',
               textDecoration: 'none',
               display: 'flex',
               alignItems: 'center',
               gap: '4px',
-              fontWeight: 600,
+              fontWeight: 700,
             }}
           >
             ← Command Centre
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--teal)' }} />
-            <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono, monospace)' }}>
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#16A34A' }} />
+            <span style={{ fontSize: '11px', color: '#5B6B80', fontFamily: 'var(--font-mono, monospace)', fontWeight: 600 }}>
               BROADCAST SYNC ACTIVE
             </span>
           </div>
@@ -84,21 +84,22 @@ function JunctionContent({ params }: JunctionPageProps) {
         {isSupervisor && (
           <div
             style={{
-              background: 'rgba(255, 190, 92, 0.15)',
-              border: '1.5px solid var(--amber)',
+              background: '#FEF3C7',
+              border: '1.5px solid #FCD34D',
               borderRadius: '10px',
-              padding: '12px',
+              padding: '12px 14px',
               display: 'flex',
               alignItems: 'center',
               gap: '10px',
+              boxShadow: 'var(--shadow-card)',
             }}
           >
             <span style={{ fontSize: '20px' }}>🛡️</span>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '12px', fontWeight: 800, color: 'var(--amber)' }}>
+              <div style={{ fontSize: '12px', fontWeight: 800, color: '#92400E' }}>
                 SUPERVISOR CONTROL OVERRIDE
               </div>
-              <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+              <div style={{ fontSize: '11px', color: '#78350F' }}>
                 Acting on behalf of assigned field officer. Actions logged with supervisor credentials.
               </div>
             </div>
@@ -109,22 +110,22 @@ function JunctionContent({ params }: JunctionPageProps) {
         {isEscalated && !isReady && !isCleared && (
           <div
             style={{
-              background: 'rgba(248, 113, 113, 0.15)',
-              border: '1.5px solid var(--danger)',
+              background: '#FEE2E2',
+              border: '1.5px solid #FCA5A5',
               borderRadius: '10px',
-              padding: '12px',
+              padding: '12px 14px',
               display: 'flex',
               alignItems: 'center',
               gap: '10px',
-              animation: 'pulse 1.8s infinite',
+              boxShadow: 'var(--shadow-card)',
             }}
           >
             <span style={{ fontSize: '20px' }}>🚨</span>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: '12px', fontWeight: 800, color: 'var(--danger)' }}>
+              <div style={{ fontSize: '12px', fontWeight: 800, color: '#B91C1C' }}>
                 LEVEL {task?.escalationLevel ?? 1} ESCALATION ACTIVE
               </div>
-              <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+              <div style={{ fontSize: '11px', color: '#991B1B' }}>
                 Silence threshold exceeded. Control room and supervisor alerted. Immediate action required.
               </div>
             </div>
@@ -134,11 +135,11 @@ function JunctionContent({ params }: JunctionPageProps) {
         {/* Big ETA Countdown Ring */}
         <div
           style={{
-            background: 'var(--bg-panel)',
+            background: '#FFFFFF',
             border: '1px solid var(--border)',
             borderRadius: '16px',
-            padding: '8px 16px',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+            padding: '12px 16px',
+            boxShadow: 'var(--shadow-card)',
           }}
         >
           <EtaRing seconds={eta} isReady={isReady} isCleared={isCleared} />
@@ -152,55 +153,58 @@ function JunctionContent({ params }: JunctionPageProps) {
           <DecisionSupport
             junctionId={junction.id}
             recommendation={task.decisionSupport}
-            operatorName={isSupervisor ? 'SUP-001 (Kavita Mehta)' : (operator?.name ?? 'Operator')}
+            operatorName={isSupervisor ? 'SUP-001 (Kavita Mehta)' : (operator?.name ?? 'Officer')}
           />
         )}
 
         {/* Interactive Action Buttons */}
         <div
           style={{
-            background: 'var(--bg-panel)',
+            background: '#FFFFFF',
             border: '1px solid var(--border)',
             borderRadius: '12px',
             padding: '16px',
+            boxShadow: 'var(--shadow-card)',
           }}
         >
           <ActionButtons
             junctionId={junction.id}
             task={task}
-            operatorName={isSupervisor ? 'SUP-001 (Kavita Mehta)' : (operator?.name ?? 'Operator')}
+            operatorName={isSupervisor ? 'SUP-001 (Kavita Mehta)' : (operator?.name ?? 'Officer')}
           />
         </div>
 
         {/* Assigned Officer Card */}
         <div
           style={{
-            background: 'var(--bg-raised)',
+            background: '#FFFFFF',
             border: '1px solid var(--border)',
             borderRadius: '10px',
             padding: '12px 14px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
+            boxShadow: 'var(--shadow-card)',
           }}
         >
           <div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Assigned Traffic Officer</div>
-            <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text)', marginTop: '2px' }}>
+            <div style={{ fontSize: '11px', color: '#5B6B80', fontWeight: 600 }}>Assigned Traffic Officer</div>
+            <div style={{ fontSize: '13px', fontWeight: 800, color: '#0B2545', marginTop: '2px' }}>
               {operator?.name ?? 'Ravi Kumar'} ({operator?.id ?? 'OP-001'})
             </div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{operator?.phone}</div>
+            <div style={{ fontSize: '11px', color: '#5B6B80' }}>{operator?.phone}</div>
           </div>
-          <Badge variant="muted" mono>{operator?.role?.toUpperCase() ?? 'OPERATOR'}</Badge>
+          <Badge variant="muted" mono>{operator?.role?.toUpperCase() ?? 'OFFICER'}</Badge>
         </div>
 
         {/* Recent Junction Event Stream (Last 5 events) */}
         <div
           style={{
-            background: 'var(--bg-panel)',
+            background: '#FFFFFF',
             border: '1px solid var(--border)',
             borderRadius: '10px',
             overflow: 'hidden',
+            boxShadow: 'var(--shadow-card)',
           }}
         >
           <div
@@ -209,15 +213,16 @@ function JunctionContent({ params }: JunctionPageProps) {
               borderBottom: '1px solid var(--border)',
               fontSize: '11px',
               fontWeight: 700,
-              color: 'var(--text-muted)',
+              color: 'var(--navy)',
               textTransform: 'uppercase',
+              background: '#EEF3F9',
             }}
           >
             Junction Activity Ledger
           </div>
           <div style={{ padding: '8px 14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {junctionEvents.length === 0 ? (
-              <div style={{ fontSize: '11px', color: 'var(--text-dim)', fontStyle: 'italic', padding: '6px 0' }}>
+              <div style={{ fontSize: '11px', color: '#94A3B8', fontStyle: 'italic', padding: '6px 0' }}>
                 No events recorded for this junction yet.
               </div>
             ) : (
@@ -232,11 +237,11 @@ function JunctionContent({ params }: JunctionPageProps) {
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ color: 'var(--teal)' }}>●</span>
-                    <span style={{ fontWeight: 600 }}>{ev.type}</span>
-                    <span style={{ color: 'var(--text-dim)' }}>by {ev.actor.split(' ')[0]}</span>
+                    <span style={{ color: '#0F766E' }}>●</span>
+                    <span style={{ fontWeight: 700, color: '#0B2545' }}>{ev.type}</span>
+                    <span style={{ color: '#64748B' }}>by {ev.actor.split(' ')[0]}</span>
                   </div>
-                  <span style={{ fontFamily: 'var(--font-mono, monospace)', color: 'var(--text-muted)' }}>
+                  <span style={{ fontFamily: 'var(--font-mono, monospace)', color: '#5B6B80', fontWeight: 600 }}>
                     +{formatSeconds(Math.round(ev.simTimestamp / 1000))}
                   </span>
                 </div>
@@ -255,13 +260,14 @@ export default function JunctionPage(props: JunctionPageProps) {
       fallback={
         <div
           style={{
-            minHeight: 'calc(100vh - 52px)',
+            minHeight: 'calc(100vh - 92px)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: 'var(--bg-base)',
-            color: 'var(--text-muted)',
+            background: '#F4F7FB',
+            color: '#5B6B80',
             fontSize: '13px',
+            fontWeight: 600,
           }}
         >
           Loading junction console...

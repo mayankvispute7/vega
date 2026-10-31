@@ -192,15 +192,15 @@ export function RouteComparison({ proposal }: RouteComparisonProps) {
             onClick={handleApprove}
             style={{
               flex: 2,
-              background: 'var(--teal)',
+              background: '#15803D',
               border: 'none',
               borderRadius: '8px',
               padding: '14px',
-              color: '#0A1222',
+              color: '#FFFFFF',
               fontSize: '14px',
               fontWeight: 800,
               cursor: 'pointer',
-              boxShadow: '0 0 20px rgba(45, 212, 191, 0.4)',
+              boxShadow: '0 2px 8px rgba(21, 128, 61, 0.25)',
               transition: 'all 150ms',
             }}
           >

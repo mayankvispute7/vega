@@ -74,7 +74,7 @@ export function AffectedJunctionsPanel({ cancelledJunctionIds, updatedJunctionId
                 <span
                   style={{
                     background: isCancelled ? 'var(--danger)' : isUpdated ? 'var(--teal)' : 'var(--bg-panel)',
-                    color: isCancelled || isUpdated ? '#0A1222' : 'var(--text)',
+                    color: isCancelled || isUpdated ? '#FFFFFF' : 'var(--text)',
                     fontSize: '11px',
                     fontWeight: 800,
                     padding: '3px 8px',

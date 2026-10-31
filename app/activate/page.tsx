@@ -115,9 +115,9 @@ export default function ActivatePage() {
                     width: '32px',
                     height: '32px',
                     borderRadius: '50%',
-                    background: step === s.num ? 'var(--teal)' : step > s.num ? 'rgba(45, 212, 191, 0.2)' : 'var(--bg-raised)',
-                    border: `1.5px solid ${step >= s.num ? 'var(--teal)' : 'var(--border)'}`,
-                    color: step === s.num ? '#0A1222' : step > s.num ? 'var(--teal)' : 'var(--text-muted)',
+                    background: step === s.num ? '#1D4ED8' : step > s.num ? '#DCFCE7' : '#EEF3F9',
+                    border: `1.5px solid ${step === s.num ? '#1D4ED8' : step > s.num ? '#86EFAC' : '#D6DFEA'}`,
+                    color: step === s.num ? '#FFFFFF' : step > s.num ? '#15803D' : '#5B6B80',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -211,7 +211,7 @@ export default function ActivatePage() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '10px',
-                background: 'rgba(10, 18, 34, 0.6)',
+                background: '#F8FAFC',
                 border: '1px solid var(--border)',
                 borderRadius: '8px',
                 padding: '12px',
@@ -235,15 +235,15 @@ export default function ActivatePage() {
               disabled={!authorized || !incidentCode}
               style={{
                 width: '100%',
-                background: authorized ? 'var(--teal)' : 'var(--bg-raised)',
+                background: authorized ? '#1D4ED8' : '#EEF3F9',
                 border: 'none',
                 borderRadius: '8px',
                 padding: '12px',
-                color: authorized ? '#0A1222' : 'var(--text-muted)',
+                color: authorized ? '#FFFFFF' : '#5B6B80',
                 fontWeight: 700,
                 fontSize: '13px',
                 cursor: authorized ? 'pointer' : 'not-allowed',
-                boxShadow: authorized ? '0 0 16px rgba(45, 212, 191, 0.3)' : 'none',
+                boxShadow: authorized ? '0 2px 8px rgba(29, 78, 216, 0.25)' : 'none',
               }}
             >
               Continue to Vehicle Selection →
@@ -378,7 +378,7 @@ export default function ActivatePage() {
                 <div
                   key={j.id}
                   style={{
-                    background: 'rgba(10, 18, 34, 0.6)',
+                    background: '#F8FAFC',
                     border: '1px solid var(--border)',
                     borderRadius: '6px',
                     padding: '8px 12px',

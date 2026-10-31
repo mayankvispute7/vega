@@ -26,12 +26,13 @@ const MapCanvas = dynamic(
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'var(--bg-base)',
-          color: 'var(--text-muted)',
+          background: '#F4F7FB',
+          color: '#5B6B80',
           fontSize: '13px',
+          fontWeight: 600,
         }}
       >
-        Initializing corridor map...
+        Initializing corridor basemap...
       </div>
     ),
   }
@@ -41,7 +42,6 @@ export default function CommandPage() {
   const { trip, vehicle, setVehicle } = useTripStore();
   const { tasks, patchTasks } = useJunctionStore();
   const { events, addRawEvents } = useAuditStore();
-  const { playing } = useSimulationStore();
 
   // Drive simulation clock and advance coordination engine
   useSimClock((simTime) => {
@@ -68,24 +68,49 @@ export default function CommandPage() {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        height: 'calc(100vh - 52px)',
+        height: 'calc(100vh - 92px)',
         overflow: 'hidden',
-        background: 'var(--bg-base)',
+        background: '#F4F7FB',
       }}
     >
+      {/* Breadcrumb sub-header */}
+      <div
+        style={{
+          height: '32px',
+          background: '#FFFFFF',
+          borderBottom: '1px solid var(--border)',
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 16px',
+          fontSize: '11px',
+          color: '#5B6B80',
+          gap: '6px',
+          flexShrink: 0,
+        }}
+      >
+        <span style={{ fontWeight: 600, color: 'var(--navy)' }}>Control Room</span>
+        <span>›</span>
+        <span>Command Centre</span>
+        <span>›</span>
+        <span style={{ color: '#0F766E', fontWeight: 700 }}>
+          Corridor MH-12 (Deccan Gymkhana → Hospital – Karve Nagar)
+        </span>
+      </div>
+
       {/* Main 3-column workspace */}
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
-        {/* Left Panel: Mission Details, KPIs, Actions */}
+        {/* Left Panel: Mission Details, KPIs, Operations */}
         <div
           style={{
-            width: '270px',
+            width: '280px',
             flexShrink: 0,
             borderRight: '1px solid var(--border)',
             display: 'flex',
             flexDirection: 'column',
             overflowY: 'auto',
-            background: 'var(--bg-panel)',
+            background: '#FFFFFF',
             zIndex: 10,
+            boxShadow: 'var(--shadow-card)',
           }}
         >
           <TripCard />
@@ -95,10 +120,10 @@ export default function CommandPage() {
             <div
               style={{
                 fontSize: '11px',
-                fontWeight: 600,
-                color: 'var(--text-muted)',
+                fontWeight: 700,
+                color: 'var(--navy)',
                 textTransform: 'uppercase',
-                letterSpacing: '0.08em',
+                letterSpacing: '0.06em',
                 marginBottom: '10px',
               }}
             >
@@ -111,12 +136,12 @@ export default function CommandPage() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '8px',
-                background: 'rgba(248, 113, 113, 0.12)',
-                border: '1px solid rgba(248, 113, 113, 0.3)',
+                background: '#FEE2E2',
+                border: '1px solid #FECACA',
                 borderRadius: '8px',
-                padding: '10px',
-                color: 'var(--danger)',
-                fontWeight: 600,
+                padding: '9px 12px',
+                color: '#B91C1C',
+                fontWeight: 700,
                 fontSize: '12px',
                 textDecoration: 'none',
                 marginBottom: '8px',
@@ -133,12 +158,12 @@ export default function CommandPage() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '8px',
-                background: 'rgba(255, 190, 92, 0.08)',
-                border: '1px solid rgba(255, 190, 92, 0.25)',
+                background: '#FEF3C7',
+                border: '1px solid #FDE68A',
                 borderRadius: '8px',
-                padding: '10px',
-                color: 'var(--amber)',
-                fontWeight: 600,
+                padding: '9px 12px',
+                color: '#B45309',
+                fontWeight: 700,
                 fontSize: '12px',
                 textDecoration: 'none',
                 marginBottom: '8px',
@@ -155,12 +180,12 @@ export default function CommandPage() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '8px',
-                background: 'rgba(96, 165, 250, 0.08)',
-                border: '1px solid rgba(96, 165, 250, 0.25)',
+                background: '#E0E9FF',
+                border: '1px solid #BFDBFE',
                 borderRadius: '8px',
-                padding: '8px',
-                color: 'var(--info)',
-                fontWeight: 600,
+                padding: '9px 12px',
+                color: '#1D4ED8',
+                fontWeight: 700,
                 fontSize: '12px',
                 textDecoration: 'none',
                 transition: 'all 150ms',
@@ -173,7 +198,7 @@ export default function CommandPage() {
         </div>
 
         {/* Center: Map Canvas & SlideOver */}
-        <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+        <div style={{ flex: 1, position: 'relative', overflow: 'hidden', background: '#F4F7FB' }}>
           <MapCanvas />
           <JunctionSlideOver />
         </div>
@@ -181,12 +206,13 @@ export default function CommandPage() {
         {/* Right Panel: Junction Coordination Rail */}
         <div
           style={{
-            width: '300px',
+            width: '310px',
             flexShrink: 0,
             borderLeft: '1px solid var(--border)',
-            background: 'var(--bg-panel)',
+            background: '#FFFFFF',
             overflow: 'hidden',
             zIndex: 10,
+            boxShadow: 'var(--shadow-card)',
           }}
         >
           <JunctionRail />

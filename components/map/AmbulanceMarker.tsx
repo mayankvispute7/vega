@@ -6,8 +6,7 @@ interface AmbulanceMarkerProps {
 }
 
 export function AmbulanceMarker({ bearing = 0 }: AmbulanceMarkerProps) {
-  const { trip, vehicle } = useTripStore();
-  const isCritical = trip.priority === 'Critical';
+  const { vehicle } = useTripStore();
 
   return (
     <div
@@ -20,46 +19,31 @@ export function AmbulanceMarker({ bearing = 0 }: AmbulanceMarkerProps) {
       }}
       title={`${vehicle.label} — ${(vehicle.speedKmh ?? 30).toFixed(0)} km/h`}
     >
-      {/* Outer pulsing glow ring */}
+      {/* Outer soft pulse ring (Government Light Theme, no neon glow) */}
       <div
         style={{
           position: 'absolute',
-          width: '44px',
-          height: '44px',
+          width: '46px',
+          height: '46px',
           borderRadius: '50%',
-          background: isCritical ? 'rgba(248, 113, 113, 0.25)' : 'rgba(45, 212, 191, 0.25)',
-          animation: 'pulse 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          background: 'rgba(185, 28, 28, 0.15)',
+          animation: 'pulse-dot 1.8s ease-in-out infinite',
         }}
       />
 
-      {/* Secondary radar sweep wave */}
+      {/* Main ambulance badge — crisp white circle with emergency red rim */}
       <div
         style={{
-          position: 'absolute',
-          width: '64px',
-          height: '64px',
+          width: '34px',
+          height: '34px',
           borderRadius: '50%',
-          border: `1px solid ${isCritical ? 'rgba(248, 113, 113, 0.3)' : 'rgba(45, 212, 191, 0.3)'}`,
-          animation: 'ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite',
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Main ambulance badge */}
-      <div
-        style={{
-          width: '32px',
-          height: '32px',
-          borderRadius: '50%',
-          background: 'var(--bg-raised)',
-          border: `2px solid ${isCritical ? 'var(--danger)' : 'var(--teal)'}`,
-          boxShadow: isCritical
-            ? '0 0 16px rgba(248, 113, 113, 0.6)'
-            : '0 0 16px rgba(45, 212, 191, 0.6)',
+          background: '#FFFFFF',
+          border: '2.5px solid #B91C1C',
+          boxShadow: '0 2px 6px rgba(11, 37, 69, 0.25)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '15px',
+          fontSize: '16px',
           transform: `rotate(${bearing}deg)`,
           transition: 'transform 200ms ease-out',
           zIndex: 10,
@@ -68,22 +52,22 @@ export function AmbulanceMarker({ bearing = 0 }: AmbulanceMarkerProps) {
         🚑
       </div>
 
-      {/* Mini speed & ID tag */}
+      {/* Speed & ID pill */}
       <div
         style={{
           position: 'absolute',
-          top: '-20px',
-          background: 'rgba(10, 18, 34, 0.92)',
-          border: '1px solid var(--border)',
+          top: '-22px',
+          background: '#0B2545',
+          border: '1px solid #D6DFEA',
           borderRadius: '4px',
-          padding: '1px 5px',
+          padding: '2px 6px',
           fontSize: '10px',
           fontWeight: 700,
           fontFamily: 'var(--font-mono, monospace)',
-          color: 'var(--text)',
+          color: '#FFFFFF',
           whiteSpace: 'nowrap',
           pointerEvents: 'none',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
+          boxShadow: '0 2px 4px rgba(11, 37, 69, 0.18)',
         }}
       >
         {(vehicle.speedKmh ?? 30).toFixed(0)} km/h

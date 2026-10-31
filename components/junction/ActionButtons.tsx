@@ -68,8 +68,8 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-      <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-        Operator Action Controls
+      <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--navy)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+        Officer Action Controls
       </div>
 
       {/* Primary Action Buttons */}
@@ -79,12 +79,12 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
           onClick={() => handleAction('Received')}
           disabled={isTerminal || status === 'Received' || status === 'Preparing'}
           style={{
-            background: status === 'Received' || status === 'Preparing' ? 'rgba(96, 165, 250, 0.25)' : 'rgba(96, 165, 250, 0.12)',
-            border: `1.5px solid ${status === 'Received' ? 'var(--info)' : 'rgba(96, 165, 250, 0.3)'}`,
+            background: status === 'Received' || status === 'Preparing' ? '#E0E9FF' : '#FFFFFF',
+            border: `1.5px solid ${status === 'Received' ? '#1D4ED8' : '#BFDBFE'}`,
             borderRadius: '10px',
             padding: '14px 10px',
-            color: 'var(--info)',
-            fontWeight: 700,
+            color: '#1D4ED8',
+            fontWeight: 800,
             fontSize: '13px',
             cursor: isTerminal || status === 'Received' || status === 'Preparing' ? 'not-allowed' : 'pointer',
             opacity: isTerminal ? 0.4 : 1,
@@ -92,6 +92,7 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
             flexDirection: 'column',
             alignItems: 'center',
             gap: '4px',
+            boxShadow: 'var(--shadow-card)',
             transition: 'all 150ms',
           }}
         >
@@ -104,12 +105,12 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
           onClick={() => handleAction('Preparing')}
           disabled={isTerminal || status === 'Preparing'}
           style={{
-            background: status === 'Preparing' ? 'rgba(255, 190, 92, 0.25)' : 'rgba(255, 190, 92, 0.12)',
-            border: `1.5px solid ${status === 'Preparing' ? 'var(--amber)' : 'rgba(255, 190, 92, 0.3)'}`,
+            background: status === 'Preparing' ? '#FEF3C7' : '#FFFFFF',
+            border: `1.5px solid ${status === 'Preparing' ? '#B45309' : '#FDE68A'}`,
             borderRadius: '10px',
             padding: '14px 10px',
-            color: 'var(--amber)',
-            fontWeight: 700,
+            color: '#B45309',
+            fontWeight: 800,
             fontSize: '13px',
             cursor: isTerminal || status === 'Preparing' ? 'not-allowed' : 'pointer',
             opacity: isTerminal ? 0.4 : 1,
@@ -117,6 +118,7 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
             flexDirection: 'column',
             alignItems: 'center',
             gap: '4px',
+            boxShadow: 'var(--shadow-card)',
             transition: 'all 150ms',
           }}
         >
@@ -130,11 +132,11 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
         onClick={() => handleAction('Ready')}
         disabled={isTerminal}
         style={{
-          background: status === 'Ready' ? 'rgba(45, 212, 191, 0.3)' : 'var(--teal)',
-          border: 'none',
+          background: status === 'Ready' ? '#DCFCE7' : '#15803D',
+          border: status === 'Ready' ? '2px solid #86EFAC' : 'none',
           borderRadius: '10px',
           padding: '16px',
-          color: '#0A1222',
+          color: status === 'Ready' ? '#15803D' : '#FFFFFF',
           fontWeight: 800,
           fontSize: '15px',
           cursor: isTerminal ? 'not-allowed' : 'pointer',
@@ -143,12 +145,12 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
           alignItems: 'center',
           justifyContent: 'center',
           gap: '8px',
-          boxShadow: status === 'Ready' ? 'none' : '0 0 20px rgba(45, 212, 191, 0.4)',
+          boxShadow: status === 'Ready' ? 'none' : '0 2px 8px rgba(21, 128, 61, 0.25)',
           transition: 'all 150ms',
         }}
       >
         <span style={{ fontSize: '18px' }}>🟢</span>
-        <span>{status === 'Ready' ? 'SIGNAL READY LOCKED' : 'CONFIRM SIGNAL READY'}</span>
+        <span>{status === 'Ready' ? 'SIGNAL READY CONFIRMED' : '3. CONFIRM SIGNAL READY'}</span>
       </button>
 
       {/* 4. Unable to Prepare */}
@@ -157,15 +159,16 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
           onClick={() => setConfirmUnable(true)}
           disabled={isTerminal}
           style={{
-            background: 'none',
-            border: '1px solid rgba(248, 113, 113, 0.3)',
+            background: '#FFFFFF',
+            border: '1px solid #FECACA',
             borderRadius: '8px',
             padding: '10px',
-            color: 'var(--danger)',
+            color: '#B91C1C',
             fontSize: '12px',
-            fontWeight: 600,
+            fontWeight: 700,
             cursor: isTerminal ? 'not-allowed' : 'pointer',
             opacity: isTerminal ? 0.4 : 1,
+            boxShadow: 'var(--shadow-card)',
             transition: 'all 150ms',
           }}
         >
@@ -174,8 +177,8 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
       ) : (
         <div
           style={{
-            background: 'rgba(248, 113, 113, 0.12)',
-            border: '1.5px solid var(--danger)',
+            background: '#FEE2E2',
+            border: '1.5px solid #FCA5A5',
             borderRadius: '8px',
             padding: '12px',
             display: 'flex',
@@ -183,7 +186,7 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
             gap: '8px',
           }}
         >
-          <div style={{ fontSize: '12px', color: 'var(--danger)', fontWeight: 600 }}>
+          <div style={{ fontSize: '12px', color: '#B91C1C', fontWeight: 700 }}>
             Confirm: Mark intersection Unable to clear? (Triggers corridor re-assessment)
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>
@@ -194,13 +197,13 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
               }}
               style={{
                 flex: 1,
-                background: 'var(--danger)',
+                background: '#B91C1C',
                 border: 'none',
                 borderRadius: '6px',
                 padding: '8px',
                 color: '#fff',
                 fontSize: '12px',
-                fontWeight: 700,
+                fontWeight: 800,
                 cursor: 'pointer',
               }}
             >
@@ -209,12 +212,13 @@ export function ActionButtons({ junctionId, task, operatorName }: ActionButtonsP
             <button
               onClick={() => setConfirmUnable(false)}
               style={{
-                background: 'none',
-                border: '1px solid var(--border)',
+                background: '#FFFFFF',
+                border: '1px solid #D6DFEA',
                 borderRadius: '6px',
                 padding: '8px 12px',
-                color: 'var(--text-muted)',
+                color: '#5B6B80',
                 fontSize: '12px',
+                fontWeight: 600,
                 cursor: 'pointer',
               }}
             >

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { createRoot, type Root } from 'react-dom/client';
-import { ROUTE_POLYLINE, ALTERNATE_POLYLINE, JUNCTIONS, ORIGIN, DESTINATION } from '@/lib/data/corridor';
+import { ROUTE_POLYLINE, ALTERNATE_POLYLINE, JUNCTIONS } from '@/lib/data/corridor';
 import { interpolateAlongPolyline } from '@/lib/utils/geo';
 import { useTripStore } from '@/store/tripStore';
 import { useJunctionStore } from '@/store/junctionStore';
@@ -36,17 +36,17 @@ export function MapCanvas() {
     return interpolateAlongPolyline(ROUTE_POLYLINE, vehicle.progressRatio);
   }, [vehicle.progressRatio]);
 
-function isWebGLSupported(): boolean {
-  if (typeof window === 'undefined') return false;
-  try {
-    const canvas = document.createElement('canvas');
-    return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
-  } catch {
-    return false;
+  function isWebGLSupported(): boolean {
+    if (typeof window === 'undefined') return false;
+    try {
+      const canvas = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+    } catch {
+      return false;
+    }
   }
-}
 
-  // 1. Initialize MapLibre
+  // 1. Initialize MapLibre with OpenStreetMap light tiles (zero API key, crystal clear)
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
 
@@ -61,38 +61,37 @@ function isWebGLSupported(): boolean {
         style: {
           version: 8,
           sources: {
-            'carto-dark': {
+            'osm-tiles': {
               type: 'raster',
               tiles: [
-                'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-                'https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-                'https://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+                'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
               ],
               tileSize: 256,
-              attribution: '© CARTO, © OpenStreetMap (simulated)',
+              attribution: '© OpenStreetMap contributors',
             },
           },
           layers: [
             {
-              id: 'carto-dark-base',
+              id: 'osm-base',
               type: 'raster',
-              source: 'carto-dark',
+              source: 'osm-tiles',
               minzoom: 0,
-              maxzoom: 20,
+              maxzoom: 19,
             },
           ],
         },
         center: [73.822, 18.506],
-        zoom: 13.6,
-        pitch: 20,
-        bearing: -15,
+        zoom: 14,
+        pitch: 15,
+        bearing: -10,
         attributionControl: false,
       });
 
       map.addControl(new maplibregl.NavigationControl({ showCompass: true }), 'top-right');
 
       map.on('load', () => {
-        // Add primary route GeoJSON
+        // Primary route GeoJSON
         map.addSource('primary-route', {
           type: 'geojson',
           data: {
@@ -105,34 +104,33 @@ function isWebGLSupported(): boolean {
           },
         });
 
-        // Glowing outer line
+        // 1. Crisp white outer casing for maximum visibility on light maps
         map.addLayer({
-          id: 'primary-route-glow',
+          id: 'primary-route-casing',
           type: 'line',
           source: 'primary-route',
           layout: { 'line-join': 'round', 'line-cap': 'round' },
           paint: {
-            'line-color': '#2DD4BF',
-            'line-width': 8,
-            'line-opacity': 0.35,
-            'line-blur': 3,
+            'line-color': '#FFFFFF',
+            'line-width': 7.5,
+            'line-opacity': 0.95,
           },
         });
 
-        // Core line
+        // 2. Deep Teal core route line (#0F766E)
         map.addLayer({
           id: 'primary-route-core',
           type: 'line',
           source: 'primary-route',
           layout: { 'line-join': 'round', 'line-cap': 'round' },
           paint: {
-            'line-color': '#2DD4BF',
-            'line-width': 3.5,
-            'line-opacity': 0.95,
+            'line-color': '#0F766E',
+            'line-width': 4.5,
+            'line-opacity': 1,
           },
         });
 
-        // Add alternate detour route GeoJSON
+        // Alternate detour route GeoJSON
         map.addSource('alternate-route', {
           type: 'geojson',
           data: {
@@ -151,10 +149,10 @@ function isWebGLSupported(): boolean {
           source: 'alternate-route',
           layout: { 'line-join': 'round', 'line-cap': 'round' },
           paint: {
-            'line-color': '#FFBE5C',
-            'line-width': 3,
-            'line-dasharray': [2, 2],
-            'line-opacity': 0.75,
+            'line-color': '#B45309',
+            'line-width': 3.5,
+            'line-dasharray': [3, 2],
+            'line-opacity': 0.85,
           },
         });
 
@@ -198,7 +196,7 @@ function isWebGLSupported(): boolean {
         ) {
           setMapError(true);
         } else {
-          console.warn('MapLibre warning:', e.error?.message ?? e);
+          console.warn('Map warning:', e.error?.message ?? e);
         }
       });
 
@@ -208,16 +206,26 @@ function isWebGLSupported(): boolean {
       setMapError(true);
     }
 
+    // Cleanup: schedule root unmounting asynchronously to avoid React rendering race condition
     return () => {
-      if (ambulanceRootRef.current) {
-        ambulanceRootRef.current.unmount();
-        ambulanceRootRef.current = null;
+      const ambRoot = ambulanceRootRef.current;
+      ambulanceRootRef.current = null;
+      if (ambulanceMarkerRef.current) {
+        ambulanceMarkerRef.current.remove();
+        ambulanceMarkerRef.current = null;
       }
-      junctionRootsRef.current.forEach(({ root, marker }) => {
-        root.unmount();
-        marker.remove();
-      });
+
+      const jEntries = Array.from(junctionRootsRef.current.values());
       junctionRootsRef.current.clear();
+
+      setTimeout(() => {
+        try { ambRoot?.unmount(); } catch {}
+        jEntries.forEach(({ root, marker }) => {
+          try { root.unmount(); } catch {}
+          try { marker.remove(); } catch {}
+        });
+      }, 0);
+
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
@@ -267,7 +275,7 @@ function isWebGLSupported(): boolean {
     }
   }, [proposal, mapLoaded]);
 
-  // If map fails or WebGL unavailable, render graceful dark vector fallback
+  // If map fails or WebGL unavailable, render graceful light vector fallback
   if (mapError) {
     return <MapCanvasFallback />;
   }
@@ -276,46 +284,47 @@ function isWebGLSupported(): boolean {
     <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
       <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />
 
-      {/* Floating map status overlay */}
+      {/* Floating map status badge (Clean government style) */}
       <div
         style={{
           position: 'absolute',
           bottom: '12px',
           left: '12px',
-          background: 'rgba(10, 18, 34, 0.88)',
+          background: 'rgba(255, 255, 255, 0.95)',
           border: '1px solid var(--border)',
           borderRadius: '8px',
-          padding: '6px 10px',
+          padding: '6px 12px',
           fontSize: '11px',
-          color: 'var(--text-muted)',
+          fontWeight: 600,
+          color: 'var(--navy)',
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
-          backdropFilter: 'blur(8px)',
+          boxShadow: 'var(--shadow-card)',
           zIndex: 2,
         }}
       >
-        <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--teal)' }} />
-        <span>MapLibre GL · CARTO Dark Matter (Pune Corridor)</span>
+        <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#16A34A' }} />
+        <span>OpenStreetMap Corridor Base · Pune Central (MH-12)</span>
       </div>
     </div>
   );
 }
 
 /**
- * Graceful SVG Fallback if MapLibre fails or WebGL is disabled
+ * Graceful Light SVG Fallback if MapLibre fails or WebGL is disabled
  */
 function MapCanvasFallback() {
   const { vehicle } = useTripStore();
   const { tasks } = useJunctionStore();
-  const { selectedJunctionId, selectJunction } = useUiStore();
+  const { selectedJunctionId } = useUiStore();
 
   return (
     <div
       style={{
         width: '100%',
         height: '100%',
-        background: 'linear-gradient(135deg, #0A1222 0%, #0d1929 50%, #0A1222 100%)',
+        background: 'var(--bg)',
         position: 'relative',
         display: 'flex',
         alignItems: 'center',
@@ -323,13 +332,13 @@ function MapCanvasFallback() {
         overflow: 'hidden',
       }}
     >
-      <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.1 }}>
+      <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.4 }}>
         <defs>
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#2DD4BF" strokeWidth="0.5" />
+          <pattern id="light-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#D6DFEA" strokeWidth="1" />
           </pattern>
         </defs>
-        <rect width="100%" height="100%" fill="url(#grid)" />
+        <rect width="100%" height="100%" fill="url(#light-grid)" />
       </svg>
 
       {/* Route polyline in fallback */}
@@ -337,10 +346,9 @@ function MapCanvasFallback() {
         <polyline
           points="14%,42% 28%,35% 44%,44% 60%,48% 76%,40% 88%,46%"
           fill="none"
-          stroke="var(--teal)"
-          strokeWidth="3"
+          stroke="#0F766E"
+          strokeWidth="4"
           strokeDasharray="6 4"
-          opacity="0.8"
         />
       </svg>
 
@@ -386,15 +394,17 @@ function MapCanvasFallback() {
           position: 'absolute',
           bottom: '12px',
           left: '12px',
-          background: 'rgba(10,18,34,0.85)',
+          background: 'rgba(255, 255, 255, 0.95)',
           border: '1px solid var(--border)',
           borderRadius: '8px',
-          padding: '6px 10px',
+          padding: '6px 12px',
           fontSize: '11px',
-          color: 'var(--amber)',
+          fontWeight: 600,
+          color: 'var(--warn)',
+          boxShadow: 'var(--shadow-card)',
         }}
       >
-        ⚠ Offline Canvas Fallback Active
+        ⚠ Vector Fallback Grid Active
       </div>
     </div>
   );

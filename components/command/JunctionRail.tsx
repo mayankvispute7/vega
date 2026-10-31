@@ -35,15 +35,15 @@ export function JunctionRail() {
         <div
           style={{
             fontSize: '11px',
-            fontWeight: 600,
-            color: 'var(--text-muted)',
+            fontWeight: 700,
+            color: 'var(--navy)',
             textTransform: 'uppercase',
-            letterSpacing: '0.08em',
+            letterSpacing: '0.06em',
           }}
         >
-          Junction Coordination Rail
+          Junction Readiness Stepper
         </div>
-        <span style={{ fontSize: '11px', color: 'var(--text-dim)', fontFamily: 'var(--font-mono, monospace)' }}>
+        <span style={{ fontSize: '11px', color: 'var(--muted)', fontFamily: 'var(--font-mono, monospace)', fontWeight: 600 }}>
           {JUNCTIONS.length} Nodes
         </span>
       </div>
@@ -67,36 +67,24 @@ export function JunctionRail() {
               onKeyDown={(e) => e.key === 'Enter' && selectJunction(j.id)}
               aria-label={`Junction ${j.name} — ${task?.status ?? 'Scheduled'}`}
               style={{
-                background: isSelected ? 'var(--bg-raised)' : 'rgba(23, 42, 74, 0.45)',
-                border: `1px solid ${
+                background: isSelected ? '#EFF6FF' : '#FFFFFF',
+                border: `1.5px solid ${
                   isSelected
-                    ? 'var(--teal)'
+                    ? '#1D4ED8'
                     : isAlert
-                    ? 'rgba(255, 190, 92, 0.4)'
+                    ? '#FCD34D'
                     : isDanger
-                    ? 'rgba(248, 113, 113, 0.4)'
-                    : 'var(--border)'
+                    ? '#FCA5A5'
+                    : '#D6DFEA'
                 }`,
                 borderRadius: '10px',
                 padding: '10px 12px',
                 cursor: 'pointer',
-                transition: 'border-color 150ms, background 150ms, transform 150ms',
+                transition: 'border-color 150ms, background 150ms',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '10px',
-                boxShadow: isSelected ? '0 0 12px rgba(45, 212, 191, 0.25)' : 'none',
-              }}
-              onMouseEnter={(e) => {
-                if (!isSelected) e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
-              }}
-              onMouseLeave={(e) => {
-                if (!isSelected) {
-                  e.currentTarget.style.borderColor = isAlert
-                    ? 'rgba(255, 190, 92, 0.4)'
-                    : isDanger
-                    ? 'rgba(248, 113, 113, 0.4)'
-                    : 'var(--border)';
-                }
+                boxShadow: isSelected ? '0 2px 8px rgba(29, 78, 216, 0.15)' : 'var(--shadow-card)',
               }}
             >
               {/* Mini Countdown or Node Number */}
@@ -112,27 +100,27 @@ export function JunctionRail() {
                     borderRadius: '50%',
                     background:
                       task?.status === 'Ready' || task?.status === 'Cleared'
-                        ? 'rgba(45,212,191,0.15)'
+                        ? '#DCFCE7'
                         : isAlert
-                        ? 'rgba(255,190,92,0.15)'
+                        ? '#FEF3C7'
                         : isDanger
-                        ? 'rgba(248,113,113,0.15)'
-                        : 'rgba(143,163,191,0.12)',
-                    border: `1px solid ${
+                        ? '#FEE2E2'
+                        : '#EEF3F9',
+                    border: `1.5px solid ${
                       task?.status === 'Ready' || task?.status === 'Cleared'
-                        ? 'rgba(45,212,191,0.4)'
+                        ? '#15803D'
                         : isAlert
-                        ? 'rgba(255,190,92,0.4)'
+                        ? '#B45309'
                         : isDanger
-                        ? 'rgba(248,113,113,0.4)'
-                        : 'rgba(143,163,191,0.25)'
+                        ? '#B91C1C'
+                        : '#CBD5E1'
                     }`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     fontSize: '12px',
                     fontWeight: 700,
-                    color: 'var(--text)',
+                    color: '#0B2545',
                     fontFamily: 'var(--font-mono, monospace)',
                     flexShrink: 0,
                   }}
@@ -146,8 +134,8 @@ export function JunctionRail() {
                 <div
                   style={{
                     fontSize: '12px',
-                    fontWeight: 600,
-                    color: 'var(--text)',
+                    fontWeight: 700,
+                    color: '#0B2545',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
@@ -155,8 +143,8 @@ export function JunctionRail() {
                 >
                   {j.name}
                 </div>
-                <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>
-                  {op?.name ?? 'Operator'} · Lead {j.leadTime}s
+                <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '2px' }}>
+                  {op?.name ?? 'Officer'} · Lead {j.leadTime}s
                 </div>
               </div>
 
@@ -171,8 +159,9 @@ export function JunctionRail() {
                   <span
                     style={{
                       fontSize: '10px',
-                      color: 'var(--text-muted)',
+                      color: 'var(--muted)',
                       fontFamily: 'var(--font-mono, monospace)',
+                      fontWeight: 600,
                     }}
                   >
                     ETA {formatSeconds(eta)}
@@ -194,13 +183,13 @@ export function JunctionRail() {
             alignItems: 'center',
             justifyContent: 'center',
             gap: '6px',
-            background: 'rgba(45, 212, 191, 0.08)',
-            border: '1px solid rgba(45, 212, 191, 0.25)',
+            background: '#E0E9FF',
+            border: '1px solid #BFDBFE',
             borderRadius: '8px',
             padding: '8px 12px',
-            color: 'var(--teal)',
+            color: '#1D4ED8',
             fontSize: '11px',
-            fontWeight: 600,
+            fontWeight: 700,
             textDecoration: 'none',
             textAlign: 'center',
             transition: 'background 150ms',

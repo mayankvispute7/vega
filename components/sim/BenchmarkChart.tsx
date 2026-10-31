@@ -22,7 +22,7 @@ export function BenchmarkChart({ selectedScenario }: BenchmarkChartProps) {
     name: s.name,
     seconds: s.totalJourneyTimeS,
     minutes: (s.totalJourneyTimeS / 60).toFixed(1),
-    fill: s.name === 'VEGA-Assisted' ? '#2DD4BF' : s.name === 'Baseline' ? '#FFBE5C' : '#F87171',
+    fill: s.name === 'VEGA-Assisted' ? '#0F766E' : s.name === 'Baseline' ? '#B45309' : '#B91C1C',
   }));
 
   // 2. Per-Junction Wait Time across scenarios
@@ -60,36 +60,38 @@ export function BenchmarkChart({ selectedScenario }: BenchmarkChartProps) {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {/* Chart 1: Total Journey Time */}
       <div
         style={{
-          background: 'var(--bg-panel)',
+          background: '#FFFFFF',
           border: '1px solid var(--border)',
           borderRadius: '12px',
           padding: '20px',
+          boxShadow: 'var(--shadow-card)',
         }}
       >
-        <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text)', marginBottom: '4px' }}>
-          Simulated Corridor Transit Time (Seconds)
+        <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--navy)', marginBottom: '4px' }}>
+          Simulated Corridor Transit Duration (Seconds)
         </div>
-        <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '16px' }}>
+        <div style={{ fontSize: '12px', color: 'var(--muted)', marginBottom: '16px' }}>
           Total duration from Deccan Gymkhana origin to Karve Nagar destination across simulated protocols.
         </div>
 
         <div style={{ width: '100%', height: '240px' }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={journeyTimeData} margin={{ top: 10, right: 20, left: 0, bottom: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
-              <XAxis dataKey="name" stroke="#8FA3BF" tick={{ fontSize: 12 }} />
-              <YAxis stroke="#8FA3BF" tick={{ fontSize: 11 }} unit="s" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#D6DFEA" />
+              <XAxis dataKey="name" stroke="#0B2545" tick={{ fontSize: 12, fontWeight: 600 }} />
+              <YAxis stroke="#0B2545" tick={{ fontSize: 11, fontWeight: 600 }} unit="s" />
               <Tooltip
                 contentStyle={{
-                  background: 'rgba(18, 32, 58, 0.95)',
-                  borderColor: 'rgba(255,255,255,0.15)',
+                  background: '#FFFFFF',
+                  border: '1px solid #D6DFEA',
                   borderRadius: '8px',
                   fontSize: '12px',
-                  color: '#fff',
+                  color: '#0F1B2D',
+                  boxShadow: 'var(--shadow-panel)',
                 }}
                 formatter={(val: any) => [`${val}s (${(Number(val) / 60).toFixed(1)} mins)`, 'Journey Time']}
               />
@@ -98,7 +100,7 @@ export function BenchmarkChart({ selectedScenario }: BenchmarkChartProps) {
           </ResponsiveContainer>
         </div>
 
-        <div style={{ fontSize: '11px', color: 'var(--text-dim)', textAlign: 'right', fontStyle: 'italic', marginTop: '8px' }}>
+        <div style={{ fontSize: '11px', color: 'var(--muted)', textAlign: 'right', fontStyle: 'italic', marginTop: '8px' }}>
           * Simulated result — not a real-world measurement. Model assumes Pune road segment specifications.
         </div>
       </div>
@@ -106,43 +108,45 @@ export function BenchmarkChart({ selectedScenario }: BenchmarkChartProps) {
       {/* Chart 2: Per-Junction Wait Time */}
       <div
         style={{
-          background: 'var(--bg-panel)',
+          background: '#FFFFFF',
           border: '1px solid var(--border)',
           borderRadius: '12px',
           padding: '20px',
+          boxShadow: 'var(--shadow-card)',
         }}
       >
-        <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text)', marginBottom: '4px' }}>
+        <div style={{ fontSize: '15px', fontWeight: 800, color: 'var(--navy)', marginBottom: '4px' }}>
           Intersection Signal Hold Delay by Node (Seconds)
         </div>
-        <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '16px' }}>
+        <div style={{ fontSize: '12px', color: 'var(--muted)', marginBottom: '16px' }}>
           Simulated vehicle wait time experienced at each individual intersection.
         </div>
 
         <div style={{ width: '100%', height: '260px' }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={junctionWaitData} margin={{ top: 10, right: 20, left: 0, bottom: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
-              <XAxis dataKey="junction" stroke="#8FA3BF" tick={{ fontSize: 11 }} />
-              <YAxis stroke="#8FA3BF" tick={{ fontSize: 11 }} unit="s" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#D6DFEA" />
+              <XAxis dataKey="junction" stroke="#0B2545" tick={{ fontSize: 11, fontWeight: 600 }} />
+              <YAxis stroke="#0B2545" tick={{ fontSize: 11, fontWeight: 600 }} unit="s" />
               <Tooltip
                 contentStyle={{
-                  background: 'rgba(18, 32, 58, 0.95)',
-                  borderColor: 'rgba(255,255,255,0.15)',
+                  background: '#FFFFFF',
+                  border: '1px solid #D6DFEA',
                   borderRadius: '8px',
                   fontSize: '12px',
-                  color: '#fff',
+                  color: '#0F1B2D',
+                  boxShadow: 'var(--shadow-panel)',
                 }}
               />
-              <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
-              <Bar dataKey="Baseline" fill="#FFBE5C" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="VEGA-Assisted" fill="#2DD4BF" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="Failure" fill="#F87171" radius={[4, 4, 0, 0]} />
+              <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px', color: '#0B2545', fontWeight: 600 }} />
+              <Bar dataKey="Baseline" fill="#B45309" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="VEGA-Assisted" fill="#0F766E" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="Failure" fill="#B91C1C" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        <div style={{ fontSize: '11px', color: 'var(--text-dim)', textAlign: 'right', fontStyle: 'italic', marginTop: '8px' }}>
+        <div style={{ fontSize: '11px', color: 'var(--muted)', textAlign: 'right', fontStyle: 'italic', marginTop: '8px' }}>
           * Simulated result — not a real-world measurement.
         </div>
       </div>

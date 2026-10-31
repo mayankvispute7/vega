@@ -1,4 +1,4 @@
-﻿// store/uiStore.ts — UI state (role, toasts, selected junction)
+// store/uiStore.ts — UI state (role, language, toasts, selected junction)
 import { create } from 'zustand';
 import type { UserRole } from '@/lib/types';
 
@@ -9,11 +9,15 @@ export interface Toast {
   duration?: number;
 }
 
+export type Language = 'EN' | 'MR';
+
 interface UiStore {
   role: UserRole;
+  language: Language;
   selectedJunctionId: string | null;
   toasts: Toast[];
   setRole: (r: UserRole) => void;
+  setLanguage: (l: Language) => void;
   selectJunction: (id: string | null) => void;
   addToast: (t: Omit<Toast, 'id'>) => void;
   removeToast: (id: string) => void;
@@ -24,10 +28,12 @@ let toastCounter = 0;
 
 export const useUiStore = create<UiStore>((set) => ({
   role: 'Dispatcher',
+  language: 'EN',
   selectedJunctionId: null,
   toasts: [],
 
   setRole: (role) => set({ role }),
+  setLanguage: (language) => set({ language }),
   selectJunction: (selectedJunctionId) => set({ selectedJunctionId }),
 
   addToast: (t) => {
@@ -42,5 +48,5 @@ export const useUiStore = create<UiStore>((set) => ({
   removeToast: (id) =>
     set((s) => ({ toasts: s.toasts.filter((t) => t.id !== id) })),
 
-  reset: () => set({ role: 'Dispatcher', selectedJunctionId: null, toasts: [] }),
+  reset: () => set({ role: 'Dispatcher', language: 'EN', selectedJunctionId: null, toasts: [] }),
 }));

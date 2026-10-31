@@ -35,9 +35,9 @@ export function SimControls() {
         alignItems: 'center',
         gap: '12px',
         padding: '0 16px',
-        background: 'rgba(10, 18, 34, 0.85)',
-        backdropFilter: 'blur(8px)',
+        background: '#FFFFFF',
         flexShrink: 0,
+        boxShadow: '0 -1px 3px rgba(11, 37, 69, 0.04)',
       }}
     >
       <Badge variant="muted" mono>
@@ -48,21 +48,21 @@ export function SimControls() {
         onClick={handleReset}
         title="Reset demo to initial state"
         style={{
-          background: 'none',
-          border: '1px solid var(--border)',
+          background: '#FFFFFF',
+          border: '1px solid #D6DFEA',
           borderRadius: '6px',
-          color: 'var(--text-muted)',
+          color: '#0B2545',
           cursor: 'pointer',
           padding: '5px 12px',
           fontSize: '12px',
-          fontWeight: 500,
+          fontWeight: 600,
           display: 'flex',
           alignItems: 'center',
-          gap: '4px',
+          gap: '5px',
           transition: 'all 150ms',
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--text)')}
-        onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
+        onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#1D4ED8')}
+        onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#D6DFEA')}
         aria-label="Reset demo"
       >
         <span>↺</span>
@@ -72,10 +72,10 @@ export function SimControls() {
       <button
         onClick={() => setPlaying(!playing)}
         style={{
-          background: playing ? 'rgba(248, 113, 113, 0.15)' : 'rgba(45, 212, 191, 0.15)',
-          border: `1px solid ${playing ? 'rgba(248, 113, 113, 0.35)' : 'rgba(45, 212, 191, 0.35)'}`,
+          background: playing ? '#FEE2E2' : '#DCFCE7',
+          border: `1.5px solid ${playing ? '#FECACA' : '#86EFAC'}`,
           borderRadius: '6px',
-          color: playing ? 'var(--danger)' : 'var(--teal)',
+          color: playing ? '#B91C1C' : '#15803D',
           cursor: 'pointer',
           padding: '5px 16px',
           fontSize: '13px',
@@ -92,25 +92,23 @@ export function SimControls() {
       </button>
 
       <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-        <span style={{ fontSize: '11px', color: 'var(--text-dim)', marginRight: '2px' }}>Speed:</span>
+        <span style={{ fontSize: '11px', color: '#5B6B80', marginRight: '4px', fontWeight: 600 }}>Speed:</span>
         {speeds.map((s) => (
           <button
             key={s}
             onClick={() => setSpeed(s)}
             style={{
-              background: speed === s ? 'rgba(45, 212, 191, 0.18)' : 'none',
-              border: `1px solid ${speed === s ? 'rgba(45, 212, 191, 0.4)' : 'var(--border)'}`,
-              borderRadius: '6px',
-              color: speed === s ? 'var(--teal)' : 'var(--text-muted)',
+              background: speed === s ? '#1D4ED8' : '#EEF3F9',
+              border: `1px solid ${speed === s ? '#1D4ED8' : '#D6DFEA'}`,
+              borderRadius: '5px',
+              color: speed === s ? '#FFFFFF' : '#0B2545',
               cursor: 'pointer',
-              padding: '4px 10px',
-              fontSize: '12px',
-              fontWeight: speed === s ? 700 : 400,
+              padding: '3px 8px',
+              fontSize: '11px',
+              fontWeight: 700,
               fontFamily: 'var(--font-mono, monospace)',
-              transition: 'all 150ms',
+              transition: 'all 120ms',
             }}
-            aria-label={`Set simulation speed to ${s}x`}
-            aria-pressed={speed === s}
           >
             {s}×
           </button>
@@ -119,16 +117,9 @@ export function SimControls() {
 
       <div style={{ flex: 1 }} />
 
-      <span
-        style={{
-          fontSize: '11px',
-          color: 'var(--text-dim)',
-          fontFamily: 'var(--font-mono, monospace)',
-          letterSpacing: '0.04em',
-        }}
-      >
+      <div style={{ fontSize: '11px', color: '#92400E', fontWeight: 600 }}>
         SIMULATED DATA · NOT FOR OPERATIONAL DEPLOYMENT
-      </span>
+      </div>
     </div>
   );
 }
